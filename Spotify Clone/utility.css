@@ -1,0 +1,53 @@
+.border{
+    border: 2px solid red;
+    margin: 3px;
+}
+.flex{
+    display: flex;
+}
+.justify-center {
+    justify-content: center;
+}
+.items-center{
+    align-items: center ;
+}
+
+.bg-black{
+    background-color: black;
+    color: white;
+}
+.invert {
+    filter: invert(1);
+}
+.bg-grey{
+    background-color: #121212;
+}
+.rounded{
+    border-radius: 7px;
+}
+.m-1{
+    margin: 5px;
+}
+.p-1{
+    padding: 10px;
+}
+/* Scrollbar ki width (patla karne ke liye) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Scrollbar ka background (piche wala rasta) */
+::-webkit-scrollbar-track {
+    background: #121212;
+}
+
+/* Scrollbar ka draggable thumb (jis ko pakad kar scroll karte hain) */
+::-webkit-scrollbar-thumb {
+    background: #3e3e3e;
+    border-radius: 4px;
+}
+
+/* Hover karne par thumb ka color change hoga */
+::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a;
+}
