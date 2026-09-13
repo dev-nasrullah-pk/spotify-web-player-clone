@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root{
+    --a:0;
+}
 * {
     margin: 0;
     padding: 0;
@@ -109,6 +112,12 @@ body {
     border-radius: 5px;
     background-color: #252525;
     position: relative;
+    transition: all 0.3s;
+}
+.card:hover{
+    background-color: rgb(58, 58, 58);
+    cursor: pointer;
+    --a: 1;
 }
 
 .card>* {
@@ -124,6 +133,11 @@ body {
     position: absolute;
     top: 110px;
     right: 18px;
+    transition: all 0.5s;
+    opacity: var(--a);
+}
+.play{
+    transform: translate3d(20px);
 }
 
 button>* {
@@ -319,7 +333,7 @@ button>* {
     }
 
     .playbar {
-        width: calc(100vw - 50px);
+        width: calc(110vw - 40px);
     }
 
     .seekbar {
@@ -336,7 +350,8 @@ button>* {
     }
 
     .card {
-        width: 90vw;
+        width: 30vw;
+        
     }
 
     .cardContainer {
