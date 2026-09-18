@@ -83,15 +83,23 @@ async function displayAlbums() {
 async function main() {
     //Get the First All the songs
     await getSongs("songs/ncs");
-    playMusic(songs[0], true)
+    if(songs && songs.length > 0){
+        playMusic(songs[0], true)
+    }
 
     displayAlbums();
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
-            console.log("fetching songs forlder", item.currentTarget.dataset.folder)
-            songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`);
-            console.log("loaded songs:", songs)
-            playMusic(songs[0]);
+            let folder = item.currentTarget.dataset.folder;
+            if (!folder){
+                console.error("Card par data-folder missing hai")
+                return;
+            }
+            console.log("fetching songs folder", folder)
+            songs = await getSongs(`songs/${folder}`)
+            if(songs && songs.length > 0 ){
+                playMusic(songs[0]);
+            }
         })
     });
     //Play and pause
