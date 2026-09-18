@@ -60,9 +60,10 @@ async function getSongs(folder) {
 const playMusic = (track, pause = false) => {
     // let audio = new Audio("/songs/" + track)
     currentSong.src = `/${currFolder}/${track}`;
+    let playbtn =document.querySelector("#play")
     if (!pause) {
-        currentSong.play()
-        play.src = "pause.svg";
+        currentSong.play() 
+        if(playbtn) playbtn.src = "pause.svg";
     }
     document.querySelector(".songinfo").innerHTML = decodeURI(track);
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
