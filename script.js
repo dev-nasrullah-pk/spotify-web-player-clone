@@ -17,20 +17,20 @@ function secondsToMinutesSeconds(seconds) {
 };
 async function getSongs(folder) {
     currFolder = folder;
-    let a = await fetch(`${folder}/`);
-    let response = await a.text();
-    let div = document.createElement("div");
-    div.innerHTML = response
-    let as = div.getElementsByTagName("a")
-    songs = []
-    for (let index = 0; index < as.length; index++) {
-        const element = as[index];
-        if (element.href.endsWith(".mp3")) {
-            let clearUrl = element.href.replaceAll("%5C", "/")
-            let songName = clearUrl.split(`${folder}/`)[1] || clearUrl.split(`${folder}`)[1];
-            songs.push(songName);
-        }
-    };
+    let a = await fetch(`${folder}/songs.json`);
+    songs = await a.json()
+    // let response = await a.json();
+    // let div = document.createElement("div");
+    // div.innerHTML = ""
+    // let as = div.getElementsByTagName("a")
+    // for (let index = 0; index < as.length; index++) {
+    //     const element = as[index];
+    //     if (element.href.endsWith(".mp3")) {
+    //         let clearUrl = element.href.replaceAll("%5C", "/")
+    //         let songName = clearUrl.split(`${folder}/`)[1] || clearUrl.split(`${folder}`)[1];
+    //         songs.push(songName);
+    //     }
+    // };
     //Show all the songs in the playliist
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
     songUL.innerHTML = "";
@@ -49,7 +49,7 @@ async function getSongs(folder) {
     };
     //Attach an event listner to each Song
     Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
-        e.addEventListener("click", element => {
+        e.addEventListener("click", () => {
             playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
             play.src = "pause.svg"
         })
@@ -126,7 +126,7 @@ async function main() {
     })
     //Previous Button
     previous.addEventListener("click", () => {
-        let currentFileName = currentSong.src.split("/").slice(-1)[0]
+        let currentFileName = decodeURI(currentSong.src.split("/").slice(-1)[0]);
         let index = songs.indexOf(currentFileName);
         console.log("current index ", index)
         if ((index - 1) >= 0) {
@@ -136,7 +136,7 @@ async function main() {
     //Next Listener
     next.addEventListener("click", () => {
         currentSong.pause()
-        let currentFileName = currentSong.src.split("/").slice(-1)[0]
+        let currentFileName = decodeURI(currentSong.src.split("/").slice(-1)[0]);
         let index = songs.indexOf(currentFileName);
         console.log("current index ", index)
         if ((index + 1) < songs.length) {
