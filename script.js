@@ -57,7 +57,6 @@ async function getSongs(folder) {
 };
 
 const playMusic = (track, pause = false) => {
-    // let audio = new Audio("/songs/" + track)
     currentSong.src = `${currFolder}/${track}`;
     let playbtn =document.querySelector("#play")
     if (!pause) {
@@ -154,7 +153,7 @@ async function main() {
     //Volume Listener
     let para = document.querySelector(".text")
     document.querySelector(".range").addEventListener("input", (e) => {
-        para.innerHTML = `${e.target.value}%`;
+        if (para) para.innerHTML = `${e.target.value}%`;
         currentSong.volume = parseInt(e.target.value) / 100;
 
     })
