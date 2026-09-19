@@ -151,9 +151,9 @@ async function main() {
         }
     })
     //Volume Listener
-    let para = document.querySelector(".text")
+    let vol = document.querySelector(".vol-text")
     document.querySelector(".range").addEventListener("input", (e) => {
-        if (para) para.innerHTML = `${e.target.value}%`;
+        if (vol) vol.innerHTML = `${e.target.value}%`;
         currentSong.volume = parseInt(e.target.value) / 100;
 
     })
