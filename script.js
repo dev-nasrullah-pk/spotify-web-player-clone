@@ -48,10 +48,9 @@ async function getSongs(folder) {
         </li>`;
     };
     //Attach an event listner to each Song
-    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach((e, index)=> {
         e.addEventListener("click", () => {
-            playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
-            play.src = "pause.svg"
+            playMusic(songs[index])
         })
     });
     return songs
