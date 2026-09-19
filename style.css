@@ -328,6 +328,9 @@ button>* {
         background-color: black;
         padding: 0;
     }
+    .left{
+        width: 90vw;
+    }
 
     .right {
         width: 100vw;
