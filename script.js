@@ -123,6 +123,7 @@ async function displayAlbums() {
                 }
             }   
         }
+        
                     // Dynamic card listner
                     Array.from(document.getElementsByClassName("card")).forEach(e => {
             e.addEventListener("click", async item => {
