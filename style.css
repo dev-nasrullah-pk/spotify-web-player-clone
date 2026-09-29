@@ -355,7 +355,9 @@ button>* {
         width: 30vw;
 
     }
-
+    .play{
+        display: none;
+    }
     .cardContainer {
         margin: 0;
         justify-content: center;

@@ -36,7 +36,7 @@ async function getSongs(folder) {
 
     // Playlist UI update 
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
-    songUL.innerHTML = "";
+    songUL.innerHTML = "";   
 
     for (const song of songs) {
         songUL.innerHTML += `<li>
@@ -83,41 +83,45 @@ async function displayAlbums() {
     try {
         let a = await fetch(`/songs/`);
         let response = await a.text();
+        console.log("Songs folder responsive", response)
         let div = document.createElement("div");
         div.innerHTML = response;
         let anchors = div.getElementsByTagName("a");
-        let cardContainer = document.querySelector(".cardContainer");
+        let cardContainer = document.querySelector(".cardContainer")
+        if(!cardContainer){
+            console.error(".cardcontainer HTML me nhi mila!")
+            return
+        }
         cardContainer.innerHTML = "";
         let array = Array.from(anchors);
         for (let index = 0; index < array.length; index++) {
             const e = array[index]
-            let href = e.href;
-            if (href.includes("/songs/")) {
+            let href = decodeURIComponent(e.href).replace(/\\/g, "/");
+            if (href.includes("/songs") && !href.includes(".json") && !href.includes(".htaccess")) {
                 let parts = href.split("/").filter(Boolean);
                 let folder = parts[parts.length - 1];
-                if (folder !== "songs") {
+                if (folder !== "songs" && folder !== "127.0.0.1" && folder !== "http:" && folder !== "localhost") {
                     try {
                         let res = await fetch(`songs/${folder}/info.json`)
+                        if (!res.ok) continue;
                         let info = await res.json();
-                        cardContainer.innerHTML += `
+                       cardContainer.innerHTML += `
                         <div data-folder="${folder}" class="card">
-                        <div class="play">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
-                        <!-- Green Circle Background -->
-                        <circle cx="50" cy="50" r="50" fill="#1fdf64" />
-                        <!-- Black Play Triangle -->
-                        <polygon points="40,32 70,50 40,68" fill="#000000" />
-                        </svg>
-                        </div>
-                        <img src="/songs/${folder}/cover.jpg" alt="">
-                        <h2>${info.title}</h2>
-                        <p>${info.description}</p>
+                            <div class="play">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
+                                    <circle cx="50" cy="50" r="50" fill="#1fdf64" />
+                                    <polygon points="40,32 70,50 40,68" fill="#000000" />
+                                </svg>
+                            </div>
+                            <img src="songs/${folder}/cover.jpeg" alt="">
+                            <h2>${info.title}</h2>
+                            <p>${info.description}</p>
                         </div>`;
                     } catch (err) {
-                        console.error(`info.json missing in ${folder}:`, err);
+                        console.error(`info.json missing or error in folder ${folder}:`, err);
                     }
                 }
-            }
+            }   
         }
                     // Dynamic card listner
                     Array.from(document.getElementsByClassName("card")).forEach(e => {
@@ -127,7 +131,7 @@ async function displayAlbums() {
                     console.error("Card par data-folder attribute missing hai");
                     return;
                 }
-                console.log("fetching songs folder", folder)
+                console.log("fetching songs folder", folderName)
                 songs = await getSongs(`songs/${folderName}`);
                 if (songs && songs.length > 0) {
                     playMusic(songs[0]);
@@ -143,16 +147,12 @@ async function displayAlbums() {
 
 // Main Execution Function
 async function main() {
-    // 1. First Playlist (NCS)
+    // First Playlist (NCS)
     await getSongs("songs/ncs");
-    if (songs && songs.length > 0) {
-        playMusic(songs[0], true);
-    }
+   playMusic(songs[0], true)
+    await displayAlbums();
 
-    // 2. Display Albums
-//    await displayAlbums();
-
-    // 3. Album Card Click Events (ncs, cs, etc.)
+    // Album Card Click Events (ncs, cs, etc.)
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
             let folder = item.currentTarget.dataset.folder;
@@ -168,7 +168,7 @@ async function main() {
         });
     });
 
-    // 4. Play / Pause Button Listener
+    // Play / Pause Button Listener
     let playbtn = document.querySelector("#play") || (typeof play !== "undefined" ? play : null);
     if (playbtn) {
         playbtn.addEventListener("click", () => {
@@ -182,20 +182,20 @@ async function main() {
         });
     }
 
-    // 5. TimeUpdate & Seekbar Circle Sync
+    // TimeUpdate & Seekbar Circle Sync
     currentSong.addEventListener("timeupdate", () => {
         document.querySelector(".songtime").innerHTML = `${secondsToMinutesSeconds(currentSong.currentTime)} / ${secondsToMinutesSeconds(currentSong.duration)}`;
         document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
     });
 
-    // 6. Seekbar Click Listener
+    // Seekbar Click Listener
     document.querySelector(".seekbar").addEventListener("click", e => {
         let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
         document.querySelector(".circle").style.left = percent + "%";
         currentSong.currentTime = ((currentSong.duration) * percent) / 100;
     });
 
-    // 7. Mobile Hamburger Drawer Open
+    // Mobile Hamburger Drawer Open
     let hamburger = document.querySelector(".hamburger");
     if (hamburger) {
         hamburger.addEventListener("click", () => {
@@ -203,7 +203,7 @@ async function main() {
         });
     }
 
-    // 8. Mobile Drawer Close Button
+    // Mobile Drawer Close Button
     let closeBtn = document.querySelector(".close");
     if (closeBtn) {
         closeBtn.addEventListener("click", () => {
@@ -211,7 +211,7 @@ async function main() {
         });
     }
 
-    // 9. Previous Song Button
+    // Previous Song Button
     let prevbtn = document.querySelector("#previous") || (typeof previous !== "undefined" ? previous : null);
     if (prevbtn) {
         prevbtn.addEventListener("click", () => {
@@ -224,7 +224,7 @@ async function main() {
         });
     }
 
-    // 10. Next Song Button
+    // Next Song Button
     let nextbtn = document.querySelector("#next") || (typeof next !== "undefined" ? next : null);
     if (nextbtn) {
         nextbtn.addEventListener("click", () => {
@@ -238,7 +238,7 @@ async function main() {
         });
     }
 
-    // 11. Volume Control Slider
+    // Volume Control Slider
     let rangeInput = document.querySelector(".range input") || document.querySelector(".range");
     let volText = document.querySelector(".vol-text") || document.querySelector(".text");
     if (rangeInput) {
