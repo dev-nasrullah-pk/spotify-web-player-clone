@@ -120,12 +120,13 @@ body {
 
 .card img {
     width: 100%;
-    object-fit: contain;
+    height: 170px;
+    object-fit: cover;
 }
 
 .play {
     position: absolute;
-    top: 110px;
+    top: 120px;
     right: 18px;
     transition: all 0.5s;
     opacity: var(--a);

@@ -118,7 +118,7 @@ async function displayAlbums() {
                             <p>${info.description}</p>
                         </div>`;
                     } catch (err) {
-                        console.error(`info.json missing or error in folder ${folder}:`, err);
+                        // console.error(`info.json missing or error in folder ${folder}:`, err);
                     }
                 }
             }   
@@ -129,7 +129,7 @@ async function displayAlbums() {
             e.addEventListener("click", async item => {
                 let folderName = item.currentTarget.dataset.folder;
                 if(!folderName){
-                    console.error("Card par data-folder attribute missing hai");
+                    // console.error("Card par data-folder attribute missing hai");
                     return;
                 }
                 console.log("fetching songs folder", folderName)
@@ -141,7 +141,7 @@ async function displayAlbums() {
         });
 
     } catch (error) {
-        console.error("Albums fetch kare mein error aaya:", error)
+        // console.error("Albums fetch kare mein error aaya:", error)
     }
 }
 
@@ -149,7 +149,7 @@ async function displayAlbums() {
 // Main Execution Function
 async function main() {
     // First Playlist (NCS)
-    await getSongs("songs/ncs");
+    await getSongs("songs/Best Songs");
    playMusic(songs[0], true)
     await displayAlbums();
 
@@ -161,7 +161,7 @@ async function main() {
                 console.error("Card par data-folder attribute missing hai");
                 return;
             }
-            console.log("fetching songs folder:", folder);
+            // console.log("fetching songs folder:", folder);
             songs = await getSongs(`songs/${folder}`);
             if (songs && songs.length > 0) {
                 playMusic(songs[0]);
@@ -218,7 +218,7 @@ async function main() {
         prevbtn.addEventListener("click", () => {
             let currentFileName = decodeURIComponent(currentSong.src.split("/").slice(-1)[0]);
             let index = songs.indexOf(currentFileName);
-            console.log("current index ", index);
+            // console.log("current index ", index);
             if ((index - 1) >= 0) {
                 playMusic(songs[index - 1]);
             }
@@ -232,7 +232,7 @@ async function main() {
             currentSong.pause();
             let currentFileName = decodeURIComponent(currentSong.src.split("/").slice(-1)[0]);
             let index = songs.indexOf(currentFileName);
-            console.log("current index ", index);
+            // console.log("current index ", index);
             if ((index + 1) < songs.length) {
                 playMusic(songs[index + 1]);
             }
