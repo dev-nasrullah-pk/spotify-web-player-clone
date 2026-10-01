@@ -354,7 +354,7 @@ button>* {
 
     .card {
         width: 30vw;
-
+        background-color: red;
     }
     .play{
         display: none;
@@ -362,6 +362,7 @@ button>* {
     .cardContainer {
         margin: 0;
         justify-content: center;
+        border: 2px solid red;
     }
 
     .abovebar {

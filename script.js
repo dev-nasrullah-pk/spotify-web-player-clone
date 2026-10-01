@@ -106,20 +106,17 @@ async function displayAlbums() {
                 let info = await infoRes.json();
                 cardContainer.innerHTML += `
                     <div data-folder="${folder}" class="card">
-
                         <div class="play">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 100 100"
                                 width="50"
                                 height="50">
-
                                 <circle
                                     cx="50"
                                     cy="50"
                                     r="50"
                                     fill="#1fdf64"
                                 />
-
                                 <polygon
                                     points="40,32 70,50 40,68"
                                     fill="#000000"
@@ -127,11 +124,8 @@ async function displayAlbums() {
 
                             </svg>
                         </div>
-
                         <img src="songs/${folder}/cover.jpeg" alt="">
-
                         <h2>${info.title}</h2>
-
                         <p>${info.description}</p>
 
                     </div>
@@ -144,8 +138,6 @@ async function displayAlbums() {
                 );
             }
         }
-
-
         // Dynamic card listner
         Array.from(document.getElementsByClassName("card")).forEach(e => {
             e.addEventListener("click", async item => {
