@@ -354,15 +354,15 @@ button>* {
 
     .card {
         width: 30vw;
-        background-color: red;
     }
-    .play{
+
+    .play {
         display: none;
     }
+
     .cardContainer {
         margin: 0;
         justify-content: center;
-        border: 2px solid red;
     }
 
     .abovebar {
@@ -380,7 +380,8 @@ button>* {
         width: 33px;
         z-index: 10;
     }
-    .close img{
+
+    .close img {
         width: 30px;
     }
 }
