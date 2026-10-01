@@ -36,7 +36,7 @@ async function getSongs(folder) {
 
     // Playlist UI update 
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
-    songUL.innerHTML = "";   
+    songUL.innerHTML = "";
 
     for (const song of songs) {
         songUL.innerHTML += `<li>
@@ -81,55 +81,77 @@ const playMusic = (track, pause = false) => {
 // Folders List Read and Console display function
 async function displayAlbums() {
     try {
-        let a = await fetch(`/songs/`);
-        let response = await a.text();
-        console.log("Songs folder responsive", response)
-        let div = document.createElement("div");
-        div.innerHTML = response;
-        let anchors = div.getElementsByTagName("a");
+        let res = await fetch("songs/albums.json")
+        if (!res) {
+            console.error("Album json load nhi hua")
+            return;
+        }
+        let folders = await res.json();
+        console.log("Album folder", folders);
+
         let cardContainer = document.querySelector(".cardContainer")
-        if(!cardContainer){
+        if (!cardContainer) {
             console.error(".cardcontainer HTML me nhi mila!")
             return
         }
         cardContainer.innerHTML = "";
-        let array = Array.from(anchors);
-        for (let index = 0; index < array.length; index++) {
-            const e = array[index]
-            let href = decodeURIComponent(e.href).replace(/\\/g, "/");
-            if (href.includes("/songs") && !href.includes(".json") && !href.includes(".htaccess")) {
-                let parts = href.split("/").filter(Boolean);
-                let folder = parts[parts.length - 1];
-                if (folder !== "songs" && folder !== "127.0.0.1" && folder !== "http:" && folder !== "localhost") {
-                    try {
-                        let res = await fetch(`songs/${folder}/info.json`)
-                        if (!res.ok) continue;
-                        let info = await res.json();
-                       cardContainer.innerHTML += `
-                        <div data-folder="${folder}" class="card">
-                            <div class="play">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="50" height="50">
-                                    <circle cx="50" cy="50" r="50" fill="#1fdf64" />
-                                    <polygon points="40,32 70,50 40,68" fill="#000000" />
-                                </svg>
-                            </div>
-                            <img src="songs/${folder}/cover.jpeg" alt="">
-                            <h2>${info.title}</h2>
-                            <p>${info.description}</p>
-                        </div>`;
-                    } catch (err) {
-                        // console.error(`info.json missing or error in folder ${folder}:`, err);
-                    }
+
+        for (const folder of folders) {
+            try {
+                let infoRes = await fetch(`songs/${folder}/info.json`);
+                if (!infoRes.ok) {
+                    console.error(`Info.josn nhi mila ${folder}`)
+                    continue;
                 }
-            }   
+                let info = await infoRes.json();
+                cardContainer.innerHTML += `
+                    <div data-folder="${folder}" class="card">
+
+                        <div class="play">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 100 100"
+                                width="50"
+                                height="50">
+
+                                <circle
+                                    cx="50"
+                                    cy="50"
+                                    r="50"
+                                    fill="#1fdf64"
+                                />
+
+                                <polygon
+                                    points="40,32 70,50 40,68"
+                                    fill="#000000"
+                                />
+
+                            </svg>
+                        </div>
+
+                        <img src="songs/${folder}/cover.jpeg" alt="">
+
+                        <h2>${info.title}</h2>
+
+                        <p>${info.description}</p>
+
+                    </div>
+                `;
+
+            } catch (err) {
+                console.error(
+                    `Folder ${folder} load karne me error`,
+                    err
+                );
+            }
         }
-        
-                    // Dynamic card listner
-                    Array.from(document.getElementsByClassName("card")).forEach(e => {
+
+
+        // Dynamic card listner
+        Array.from(document.getElementsByClassName("card")).forEach(e => {
             e.addEventListener("click", async item => {
                 let folderName = item.currentTarget.dataset.folder;
-                if(!folderName){
-                    // console.error("Card par data-folder attribute missing hai");
+                if (!folderName) {
+                    console.error("Card par data-folder attribute missing hai");
                     return;
                 }
                 console.log("fetching songs folder", folderName)
@@ -141,7 +163,7 @@ async function displayAlbums() {
         });
 
     } catch (error) {
-        // console.error("Albums fetch kare mein error aaya:", error)
+        console.error("Albums fetch kare mein error aaya:", error)
     }
 }
 
@@ -150,7 +172,7 @@ async function displayAlbums() {
 async function main() {
     // First Playlist (NCS)
     await getSongs("songs/Best Songs");
-   playMusic(songs[0], true)
+    playMusic(songs[0], true)
     await displayAlbums();
 
     // Album Card Click Events (ncs, cs, etc.)
@@ -161,7 +183,7 @@ async function main() {
                 console.error("Card par data-folder attribute missing hai");
                 return;
             }
-            // console.log("fetching songs folder:", folder);
+            console.log("fetching songs folder:", folder);
             songs = await getSongs(`songs/${folder}`);
             if (songs && songs.length > 0) {
                 playMusic(songs[0]);
