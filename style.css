@@ -231,6 +231,18 @@ button>* {
     gap: 20px;
 }
 
+.search-input {
+    padding: 10px 122px 10px 9px;
+    border-radius: 9px;
+    background-color: #242424;
+    color: white;
+    outline: none;
+    border: 1px solid #444;
+}
+.search-input:focus{
+    border-color: #777;
+}
+
 .info {
     font-size: 13px;
     width: 160px;
@@ -301,6 +313,7 @@ button>* {
     display: flex;
     align-items: center;
     gap: 6px;
+    cursor: pointer;
 }
 
 .range {

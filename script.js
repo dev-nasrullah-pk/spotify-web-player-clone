@@ -258,9 +258,35 @@ async function main() {
     let volText = document.querySelector(".vol-text") || document.querySelector(".text");
     if (rangeInput) {
         rangeInput.addEventListener("input", (e) => {
-            if (volText) volText.innerHTML = `${e.target.value}%`;
-            currentSong.volume = parseInt(e.target.value) / 100;
+            let volumeValue = Number(e.target.value);
+             currentSong.volume = volumeValue / 100;
+            if (volText){
+                volText.innerHTML = `${volumeValue}%`;
+            }
         });
+    }
+    let mute = document.querySelector(".mute")
+    if (mute){
+        mute.addEventListener("click", (e)=>{
+            if (currentSong.muted){
+                currentSong.muted = false;  
+                mute.src = "volume.svg";
+                currentSong.volume = 0.5;
+                rangeInput.value = 50;
+                if (volText){
+                    volText.innerHTML = `50%`
+                }
+            } else {
+                currentSong.muted = true;
+                mute.src = "mute.svg"
+                currentSong.volume = 0;
+                rangeInput.value = 0;
+                if (volText){
+                    volText.innerHTML = `0%`
+                }
+            }
+
+        })
     }
 }
 
