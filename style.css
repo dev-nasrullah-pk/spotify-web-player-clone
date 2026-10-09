@@ -128,7 +128,8 @@ body {
     height: 170px;
     object-fit: cover;
 }
-.card[data-folder="Rahat Fateh"] img{
+
+.card[data-folder="Rahat Fateh"] img {
     object-fit: cover;
     object-position: 30% center;
 }
@@ -208,6 +209,24 @@ button>* {
     margin-bottom: 60px;
 }
 
+.songList li {
+    background-color: #181818;
+    border-radius: 6px;
+    transition: background-color 0.2 ease;
+}
+
+.songList li:hover {
+    background-color: #2a2a2a;
+}
+
+.songList .info div:first-child {
+    color: #f5f5f5;
+}
+
+.songList .info div:last-child {
+    color: #a7a7a7;
+}
+
 .songList ul {
     padding: 0 0 60px 11px;
 
@@ -264,6 +283,7 @@ button>* {
     justify-content: center;
     align-items: center;
 }
+
 
 .playnow span {
     font-size: 15px;
@@ -344,7 +364,6 @@ button>* {
 
 @media (max-width: 1200px) {
     .left {
-        background-color: red;
         position: absolute;
         left: -120%;
         transition: all .3s;
@@ -371,8 +390,9 @@ button>* {
         display: flex;
         flex-direction: row;
         align-items: center;
-    }   
-    .buttons{
+    }
+
+    .buttons {
         display: flex;
         flex-direction: row;
     }
@@ -422,4 +442,22 @@ button>* {
     .search-input {
         display: none;
     }
+}
+
+@media (max-width: 1200px) and (min-width: 750px){
+    .search-input{
+        display: block;
+    }
+}
+@media (max-width: 600px) {
+  .cardContainer {
+    display: flex;
+    grid-column: 1fr;
+    gap: 12px;
+  }
+  .card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 }

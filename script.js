@@ -1,5 +1,6 @@
 console.log('Let start js');
 
+let allSongs = [];
 let songs = [];
 let currFolder;
 let currentSong = new Audio();
@@ -88,25 +89,24 @@ async function displayAlbums() {
         }
         let folders = await res.json();
         console.log("Album folder", folders);
-        
+
         let cardContainer = document.querySelector(".cardContainer")
         if (!cardContainer) {
             console.error(".cardcontainer HTML me nhi mila!")
             return
         }
         cardContainer.innerHTML = "";
-        
+
         for (const folder of folders) {
             try {
-                let allSongs = [];
-                let songsRes =await fetch(`songs/${folder}/songs.json`)
+                let songsRes = await fetch(`songs/${folder}/songs.json`)
                 let folderSongs = await songsRes.json();
-               folderSongs.forEach(song=>{
-                allSongs.push({
-                    song: song,
-                    folder: folder
+                folderSongs.forEach(song => {
+                    allSongs.push({
+                        song: song,
+                        folder: folder
+                    })
                 })
-               })
                 console.log(allSongs)
                 let infoRes = await fetch(`songs/${folder}/info.json`);
                 if (!infoRes.ok) {
@@ -303,11 +303,12 @@ async function main() {
     search.addEventListener("input", () => {
         let value = search.value.toLowerCase()
         console.log(value)
-        let filter = songs.filter((song) => {
-            return song.toLowerCase().includes(value);
+        let filter = allSongs.filter((item) => {
+            return item.song.toLowerCase().includes(value);
 
         })
         console.log(filter)
+        let currentFileName = decodeURIComponent(currentSong.src.split("/").slice(-1)[0]);
         let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
         songUL.innerHTML = "";
         for (const song of filter) {
@@ -315,7 +316,7 @@ async function main() {
             songUL.innerHTML += `<li>
             <img class="invert" src="music.svg" alt="">
             <div class="info">
-                <div>${decodeURIComponent(song)}</div>
+                <div>${decodeURIComponent(song.song)}</div>
                 <div>Harry</div>
             </div>
             <div class="playnow">
@@ -323,11 +324,11 @@ async function main() {
                 <img class="invert" src="play.svg" alt="">
             </div>
         </li>`;
-        songUL.style.color = "yellow";
         }
-        Array.from(songUL.getElementsByTagName("li")).forEach((e, index)=>{
-            e.addEventListener("click", ()=>{
-                playMusic(songs[index])
+        Array.from(songUL.getElementsByTagName("li")).forEach((e, index) => {
+            e.addEventListener("click", () => {
+                currFolder = `songs/${filter[index].folder}`;
+                playMusic(filter[index].song)
             })
         })
     })
