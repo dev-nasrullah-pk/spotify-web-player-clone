@@ -83,8 +83,20 @@ body {
 }
 
 .nav {
-    padding: 22px;
-    width: 38%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #101010;
+    padding: 12px 24px;
+    gap: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.left-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 .spotifyPlaylists {
@@ -151,37 +163,34 @@ button>* {
 }
 
 .signupbtn {
-    background-color: rgb(34, 34, 34);
-    color: rgb(245, 237, 237);
-    font-weight: bold;
-    padding: 6px 9px;
-    border-radius: 8px;
+    font-weight: 700;
+    background-color: transparent;
+    color: #a7a7a7;
     border: none;
-    outline: none;
+    padding: 10px 16px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .signupbtn:hover {
-    font-size: 17px;
-    color: white;
+    color: #ffffff;
+    transform: scale(1.04);
 }
 
 .loginbtn {
-    background-color: white;
-    color: black;
-    border-radius: 21px;
-    font-weight: bold;
-    padding: 10px;
-    width: 79px;
-    cursor: pointer;
+    background-color: #ffffff;
+    color: #000000;
     border: none;
-    font-size: 16px;
+    font-weight: 700;
+    border-radius: 500px;
+    padding: 12px 30px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .loginbtn:hover {
-    font-size: bold;
-    font-size: 17px;
+    background-color: #f0f0f0;
+    transform: scale(1.04);
 }
 
 .playbar {
@@ -254,23 +263,57 @@ button>* {
 
 .humburgerCon {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 20px;
 }
 
+.nav-arrows {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    max-width: 450px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    pointer-events: none;
+}
+
 .search-input {
-    padding: 10px 122px 10px 9px;
     width: 100%;
-    border-radius: 9px;
+    padding: 11px 11px 11px 44px;
     background-color: #242424;
-    color: white;
+    color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 500px;
     outline: none;
-    border: 1px solid #444;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.search-input::placeholder {
+    border-color: #a7a7a7;
 }
 
 .search-input:focus {
-    border-color: #777;
+    background-color: #2a2a2a;
+    border-color: #ffffff;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .info {
@@ -386,7 +429,7 @@ button>* {
         width: calc(100vw - 50px);
     }
 
-    .nav {
+    .hamburgerContainer {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -440,24 +483,41 @@ button>* {
     }
 
     .search-input {
-        display: none;
+        display: block;
+        flex-wrap: wrap;
+        width: 100%;
     }
 }
 
-@media (max-width: 1200px) and (min-width: 750px){
-    .search-input{
-        display: block;
+@media (max-width: 600px) {
+    .cardContainer {
+        display: flex;
+        grid-column: 1fr;
+        gap: 12px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .nav {
+        flex-wrap: wrap;
     }
 }
-@media (max-width: 600px) {
-  .cardContainer {
-    display: flex;
-    grid-column: 1fr;
-    gap: 12px;
-  }
-  .card {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
+
+@media (max-width: 1000px) {
+    .nav {
+        flex-wrap: wrap;
+        padding: 10px 16px;
+    }
+
+    .search-container {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 10px;
+
+    }
 }
