@@ -31,23 +31,16 @@
 .p-1{
     padding: 10px;
 }
-/* Scrollbar ki width (patla karne ke liye) */
 ::-webkit-scrollbar {
     width: 8px;
 }
-
-/* Scrollbar ka background (piche wala rasta) */
 ::-webkit-scrollbar-track {
     background: #121212;
 }
-
-/* Scrollbar ka draggable thumb (jis ko pakad kar scroll karte hain) */
 ::-webkit-scrollbar-thumb {
     background: #3e3e3e;
     border-radius: 4px;
 }
-
-/* Hover karne par thumb ka color change hoga */
 ::-webkit-scrollbar-thumb:hover {
-    background: #5a5a5a;
+    background: #555555;
 }

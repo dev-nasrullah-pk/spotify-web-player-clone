@@ -137,8 +137,9 @@ body {
 
 .card img {
     width: 100%;
-    height: 170px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .card[data-folder="Rahat Fateh"] img {
@@ -148,7 +149,7 @@ body {
 
 .play {
     position: absolute;
-    top: 120px;
+    top: 110px;
     right: 18px;
     transition: all 0.5s;
     opacity: var(--a);
